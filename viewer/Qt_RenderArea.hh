@@ -45,11 +45,12 @@ public:
     Qt_RenderArea(SmartPtr<AbstractLogger> logger,
                QWidget* parent = 0);
     virtual ~Qt_RenderArea();
-    void loadURI(const char* mml_file);
+    void loadURI(QString mml_file);
 
 protected:
     void paintEvent(QPaintEvent *event);
-
+    void dragEnterEvent(QDragEnterEvent *event);    // drag file into
+    void dropEvent(QDropEvent *event); // drop file into
 private:
     SmartPtr<Backend> m_backend;
     SmartPtr<MathGraphicDevice> m_device;

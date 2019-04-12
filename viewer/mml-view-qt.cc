@@ -31,6 +31,7 @@
 #include <QCommandLineParser>
 #include <QMainWindow>
 #include <QVBoxLayout>
+#include <QDebug>
 
 int
 main(int argc, char *argv[])
@@ -47,13 +48,19 @@ main(int argc, char *argv[])
 
     const QStringList args = parser.positionalArguments();
 
-    const QString input_file = args.at(0);
-
     SmartPtr<AbstractLogger> logger = Logger::create();
 
     QMainWindow w;
     Qt_RenderArea* ra = new Qt_RenderArea(logger);
-    ra->loadURI(input_file.toUtf8());
+    if (args.isEmpty())
+    {
+        qDebug() << "usage:" << argv[0] << "mathml_file.xml";
+    }
+    else
+    {
+        const QString input_file = args.at(0);
+        ra->loadURI(input_file);
+    }
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(ra);
     QWidget* window = new QWidget();
